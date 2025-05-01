@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>명언 위젯</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fdf6e3;
+      color: #333;
+      padding: 20px;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .quote {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .author {
+      font-size: 14px;
+      text-align: right;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div id="quote-box">
+    <div class="quote">명언을 불러오는 중...</div>
+    <div class="author"></div>
+  </div>
+
+  <script>
+    fetch("https://zenquotes.io/api/random")
+      .then(response => response.json())
+      .then(data => {
+        const quote = data[0].q;
+        const author = data[0].a;
+        document.querySelector('.quote').textContent = `"${quote}"`;
+        document.querySelector('.author').textContent = `- ${author}`;
+      })
+      .catch(err => {
+        document.querySelector('.quote').textContent = "명언을 불러오지 못했어요.";
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
