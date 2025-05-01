@@ -1,32 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>명언 위젯</title>
+  <title>Daily Quote</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background-color: #fdf6e3;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
       color: #333;
       padding: 20px;
-      width: 300px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 320px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     .quote {
       font-size: 16px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
     .author {
       font-size: 14px;
       text-align: right;
-      color: #777;
+      color: #666;
     }
   </style>
 </head>
 <body>
   <div id="quote-box">
-    <div class="quote">명언을 불러오는 중...</div>
+    <div class="quote">Loading inspirational quote...</div>
     <div class="author"></div>
   </div>
 
@@ -38,10 +38,10 @@
         const quote = parsed[0].q;
         const author = parsed[0].a;
         document.querySelector('.quote').textContent = `"${quote}"`;
-        document.querySelector('.author').textContent = `- ${author}`;
+        document.querySelector('.author').textContent = `– ${author}`;
       })
       .catch(err => {
-        document.querySelector('.quote').textContent = "명언을 불러오지 못했어요.";
+        document.querySelector('.quote').textContent = "Couldn't load quote 🥲";
         console.error(err);
       });
   </script>
