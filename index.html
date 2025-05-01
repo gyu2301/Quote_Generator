@@ -31,11 +31,12 @@
   </div>
 
   <script>
-    fetch("https://zenquotes.io/api/random")
+    fetch("https://api.allorigins.win/get?url=" + encodeURIComponent("https://zenquotes.io/api/random"))
       .then(response => response.json())
       .then(data => {
-        const quote = data[0].q;
-        const author = data[0].a;
+        const parsed = JSON.parse(data.contents);
+        const quote = parsed[0].q;
+        const author = parsed[0].a;
         document.querySelector('.quote').textContent = `"${quote}"`;
         document.querySelector('.author').textContent = `- ${author}`;
       })
