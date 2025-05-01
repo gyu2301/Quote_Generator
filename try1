@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Quote of the Day</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #fceef3;
+      color: #333;
+      padding: 20px;
+      border-radius: 12px;
+      width: 300px;
+    }
+    .quote {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .author {
+      text-align: right;
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div id="quote-box">
+    <div class="quote">Loading...</div>
+    <div class="author"></div>
+  </div>
+
+  <script>
+    fetch("https://quotes.rest/qod?language=en", {
+      headers: {
+        "Accept": "application/json"
+        // "X-TheySaidSo-Api-Secret": "YOUR_API_KEY" // ← 유료일 경우 사용
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      const quote = data.contents.quotes[0].quote;
+      const author = data.contents.quotes[0].author;
+      document.querySelector('.quote').textContent = `"${quote}"`;
+      document.querySelector('.author').textContent = `- ${author}`;
+    })
+    .catch(err => {
+      document.querySelector('.quote').textContent = "명언을 불러올 수 없어요 😥";
+    });
+  </script>
+</body>
+</html>
