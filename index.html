@@ -12,11 +12,15 @@
       width: 320px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
     }
+
     .quote {
       font-size: 16px;
       margin-bottom: 12px;
+      line-height: 1.5;
     }
+
     .author {
       font-size: 14px;
       text-align: right;
@@ -31,18 +35,46 @@
   </div>
 
   <script>
-    fetch("https://api.allorigins.win/get?url=" + encodeURIComponent("https://zenquotes.io/api/random"))
-      .then(response => response.json())
-      .then(data => {
-        const parsed = JSON.parse(data.contents);
-        const quote = parsed[0].q;
-        const author = parsed[0].a;
-        document.querySelector('.quote').textContent = `"${quote}"`;
-        document.querySelector('.author').textContent = `– ${author}`;
+    const fallbackQuotes = [
+      {
+        quote: "The best way to predict the future is to create it.",
+        author: "Peter Drucker"
+      },
+      {
+        quote: "Stay hungry, stay foolish.",
+        author: "Steve Jobs"
+      },
+      {
+        quote: "It always seems impossible until it is done.",
+        author: "Nelson Mandela"
+      }
+    ];
+
+    function showQuote(quote, author) {
+      document.querySelector(".quote").textContent = `"${quote}"`;
+      document.querySelector(".author").textContent = `– ${author}`;
+    }
+
+    function showFallbackQuote() {
+      const randomIndex = Math.floor(Math.random() * fallbackQuotes.length);
+      const selectedQuote = fallbackQuotes[randomIndex];
+
+      showQuote(selectedQuote.quote, selectedQuote.author);
+    }
+
+    fetch("https://dummyjson.com/quotes/random")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("API response was not okay");
+        }
+        return response.json();
       })
-      .catch(err => {
-        document.querySelector('.quote').textContent = "Couldn't load quote 🥲";
-        console.error(err);
+      .then(data => {
+        showQuote(data.quote, data.author);
+      })
+      .catch(error => {
+        console.error("Quote API failed:", error);
+        showFallbackQuote();
       });
   </script>
 </body>
